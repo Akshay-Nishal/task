@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Li</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        li{
+            padding: 5px 10px;
+            text-decoration: none;
+            list-style: none;
+            width: 200px;
+            margin-bottom: 10px;
+            background-color: burlywood;
+        }
+        body{
+            background-color: gray;
+            padding: 50px 25%;
+        }
+        #add{
+            font-size: 25px;
+            padding: 7px 25px;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+    <button id="add">Add Li</button>
+    <ul id="ul"></ul>
+
+    <script>
+        var x = document.getElementById('add')
+        var c = 0
+        var ul = document.getElementById('ul')
+        x.addEventListener('click',()=>{
+            if (c==1){
+                let y = document.createElement('li')
+                y.innerHTML=`<h2>Hello</h2>`
+                y.style.color='Yellow'
+                ul.appendChild(y)
+                c=2
+            }
+            if(c===0){
+                let y = document.createElement('li')
+                y.innerHTML=`<h1>Hello</h1>`
+                y.style.color='Green'
+                ul.appendChild(y)
+                c=1
+            }
+        })
+    </script>
+</body>
+</html>
