@@ -1,0 +1,156 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono&display=swap" rel="stylesheet">
+    <title>Registration Form</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<style>
+    *{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    font-family: 'Chivo Mono', monospace;
+    background-image: url("https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8d29ya3xlbnwwfHwwfHw%3D&w=1000&q=80");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.form{
+    background-color: white;
+    margin: 25px 20%;
+    padding: 25px 5px 5px 5px;
+    border-radius: 10px;
+    border: 2px solid orange;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+.form-head{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.form-head h2{
+    margin-top: 30px;
+    font-size: 35px;
+    color: orange;
+    margin-bottom: 20px;
+}
+.form-head p{
+    font-size: 15px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.hr{
+    min-height: 3px;
+    min-width: 100%;
+    background-color: gray;
+    margin-bottom: 15px;
+}
+
+.form-data{
+    display: flex;
+    flex-direction: column;
+}
+
+label{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 17px;
+}
+input{
+    height: 35px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 0.5px solid grey;
+}
+
+.date-and-time{
+    width: 100%;
+    margin-bottom: 15px;
+}
+#date{
+    width: calc(50% - 5px)
+}
+#time{
+    width: calc(50% - 5px)
+}
+
+#submit-button{
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+    background-color: orange;
+    color: white;
+    border: none;
+    font-size: 20px;
+    padding: 7px;
+    border-radius: 5px;
+}
+</style>
+<body>
+    <div class="form">
+        <form onsubmit="handleSubmit(event)">
+            <div class="form-head">
+                <h2>Book a call</h2>
+                <p>Book a call slot and our representative will call you within 1hr of selected time</p>
+            </div>
+            <div class="hr"></div>
+            <div class="form-data">
+                <label for="name">Name:</label>
+                <input name="name" id="name" type="text" placeholder="Enter your name here">
+                <label for="email">Email:</label>
+                <input name="email" id="email" type="email" placeholder="example@xyx.com">
+                <label for="number">Phone:</label>
+                <input name="number" id="number" type="number" placeholder="Enter your number here"  >
+                <label for="">Time for Call:</label>
+                <div class="date-and-time">
+                    <input type="date" name="" id="date">
+                    <input type="time" name="" id="time">
+                </div>
+            </div>
+            <input type="submit" id="submit-button" name="" value="GET A CALL">
+
+        </form>
+    </div>
+    <script>
+        function handleSubmit(event) {
+            let obj={}
+            event.preventDefault();
+            var name = document.getElementById('name').value
+            console.log("Name : ",name)
+            var email = document.getElementById('email').value
+            console.log("Email : ",email)
+            var number = document.getElementById('number').value
+            console.log("Number : ",number)
+            var date = document.getElementById('date').value
+            console.log("Date : ",date)
+            var time = document.getElementById('time').value
+            console.log("Time : ",time)
+            obj.name=name
+            obj.email=email
+            obj.number=number
+            obj.date=date
+            obj.time=time
+            localStorage.setItem(email,JSON.stringify(obj))
+            document.getElementById('name').value = ''
+            document.getElementById('email').value = ''
+            document.getElementById('number').value = ''
+            document.getElementById('date').value = ''
+            document.getElementById('time').value = ''
+
+        }
+    </script>
+</body>
+</html>
