@@ -1,0 +1,164 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono&display=swap" rel="stylesheet">
+    <title>Registration Form</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<style>
+    *{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    font-family: 'Chivo Mono', monospace;
+    background-color: #797a7a;
+}
+.form{
+    background-color: white;
+    margin: 25px 20%;
+    padding: 0px 5px 5px 5px;
+    border-radius: 10px;
+    border: 2px solid orange;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+.form-data{
+    display: flex;
+    flex-direction: column;
+}
+
+label{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 17px;
+}
+input{
+    height: 35px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 0.5px solid grey;
+}
+#number{
+    margin-bottom: 25px;
+}
+
+#submit-button{
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+    background-color: orange;
+    color: white;
+    border: none;
+    font-size: 20px;
+    padding: 7px;
+    border-radius: 5px;
+}
+.data{
+    background-color: white;
+    margin: 25px 20%;
+    padding: 15px 10px 10px 10px;
+    border-radius: 10px;
+    min-height: 250px;
+    border: 2px solid orange;
+}
+h3{
+    margin-bottom: 10px;
+}
+.item{
+    width: 100%;
+    
+}
+.item button{
+    margin-right: 10px;
+}
+#del{
+    background-color: #fc4e3a;
+    border: none;
+    color: white;
+    padding: 2px 7px;
+    border-radius: 5px;
+}
+#edit{
+    background-color: #017a03;
+    border: none;
+    color: white;
+    padding: 2px 7px;
+    border-radius: 5px;
+}
+
+
+</style>
+<body>
+    <div class="form">
+        <form onsubmit="handleSubmit(event)">
+            <div class="form-data">
+                <label for="name">Name:</label>
+                <input name="name" id="name" type="text" placeholder="Enter your name here">
+                <label for="email">Email:</label>
+                <input name="email" id="email" type="email" placeholder="example@xyx.com">
+                <label for="number">Phone:</label>
+                <input name="number" id="number" type="number" placeholder="Enter your number here"  >
+            </div>
+            <input type="submit" id="submit-button" name="" value="SUBMIT">
+
+        </form>
+    </div>
+    <div class="data">
+        <center><h3>Data</h3></center>
+        <div class="list">
+            <div class="item" id="item">
+                <!-- <p>Name: Akshay Email: akshaynishal@gmail.com Number: 7017730633 <button id="del">Delete</button><button id="edit">Edit</button></p> -->
+            </div>
+        </div>
+    </div>
+    <script>
+        var list = document.getElementById('item')
+        function handleSubmit(event) {
+            let obj={}
+            event.preventDefault();
+            var name = document.getElementById('name').value
+            console.log("Name : ",name)
+            var email = document.getElementById('email').value
+            console.log("Email : ",email)
+            var number = document.getElementById('number').value
+            console.log("Number : ",number)
+            obj.name=name
+            obj.email=email
+            obj.number=number
+            localStorage.setItem(email,JSON.stringify(obj))
+            let p = document.createElement('p')
+            p.innerHTML=`Name: ${obj.name} Email: ${obj.email} Number: ${obj.number} <button id="del">Delete</button><button id="edit">Edit</button>`
+            list.appendChild(p)
+            let clr = p.querySelector('#del')
+            clr.addEventListener('click',()=>{
+                console.log("Clicked")
+                p.remove()
+                localStorage.removeItem(obj.email)
+            })
+            
+            let edit = p.querySelector('#edit')
+            edit.addEventListener('click',()=>{
+                localStorage.removeItem(obj.email)
+                document.getElementById('name').value = name
+                document.getElementById('email').value = email
+                document.getElementById('number').value = number
+                p.remove()
+            })
+            document.getElementById('name').value = ''
+            document.getElementById('email').value = ''
+            document.getElementById('number').value = ''    
+        }
+    </script>
+</body>
+</html>
