@@ -1,0 +1,58 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axios</title>
+    <style>
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 50px;
+        }
+        button{
+            background-color: forestgreen;
+            font-size: 25px;
+            padding: 10px;
+            border-radius: 25px;
+            border: none;
+        }
+
+        p{
+            font-size: 20px;
+            border: 2px solid forestgreen;
+            border-radius: 10px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <button id="get">Get A Joke From API</button>
+    <p id="text">Joke will appear here</p>
+</body>
+<script>
+    let adddata = document.getElementById('get')
+let textArea = document.getElementById('text')
+adddata.addEventListener('click',()=>{
+    console.log("HI")
+    tellJoke()
+})
+
+var data = ''
+const tellJoke =()=>{
+    const apiUrl = 'https://official-joke-api.appspot.com/random_joke';
+    axios.get(apiUrl)
+      .then(response => {
+        console.log('Response:', response.data);
+        data = response.data
+        textArea.innerHTML=`${response.data.setup}<br>${response.data.punchline}`
+      })
+      .catch(error => {
+        console.error('Error:', error.message);
+      });
+}
+</script>
+</html>
