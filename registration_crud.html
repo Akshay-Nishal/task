@@ -1,0 +1,213 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Registration Form</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<style>
+    *{
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    font-family: 'Chivo Mono', monospace;
+    background-color: #797a7a;
+}
+.form{
+    background-color: white;
+    margin: 25px 20%;
+    padding: 0px 5px 5px 5px;
+    border-radius: 10px;
+    border: 2px solid orange;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+.form-data{
+    display: flex;
+    flex-direction: column;
+}
+
+label{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 17px;
+}
+input{
+    height: 35px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 0.5px solid grey;
+}
+#number{
+    margin-bottom: 25px;
+}
+
+#submit-button{
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+    background-color: orange;
+    color: white;
+    border: none;
+    font-size: 20px;
+    padding: 7px;
+    border-radius: 5px;
+}
+.data{
+    background-color: white;
+    margin: 25px 20%;
+    padding: 15px 10px 10px 10px;
+    border-radius: 10px;
+    min-height: 250px;
+    border: 2px solid orange;
+}
+h3{
+    margin-bottom: 10px;
+}
+.item{
+    width: 100%;
+    
+}
+.item button{
+    margin-right: 10px;
+}
+#del{
+    background-color: #fc4e3a;
+    border: none;
+    color: white;
+    padding: 2px 7px;
+    border-radius: 5px;
+}
+#edit{
+    background-color: #017a03;
+    border: none;
+    color: white;
+    padding: 2px 7px;
+    border-radius: 5px;
+}
+p{
+    margin-top: 10px;
+}
+
+
+</style>
+<body>
+    <div class="form">
+        <form onsubmit="handleSubmit(event)">
+            <div class="form-data">
+                <label for="name">Name:</label>
+                <input name="name" id="name" type="text" placeholder="Enter your name here">
+                <label for="email">Email:</label>
+                <input name="email" id="email" type="email" placeholder="example@xyx.com">
+                <label for="number">Phone:</label>
+                <input name="number" id="number" type="number" placeholder="Enter your number here"  >
+            </div>
+            <input type="submit" id="submit-button" name="" value="SUBMIT">
+
+        </form>
+    </div>
+    <div class="data">
+        <center><h3>Data</h3></center>
+        <div class="list">
+            <div class="item" id="item">
+                <!-- <p>Name: Akshay Email: akshaynishal@gmail.com Number: 7017730633 <button id="del">Delete</button><button id="edit">Edit</button></p> -->
+            </div>
+        </div>
+    </div>
+    <script>
+        var list = document.getElementById('item')
+        var temp
+        axios.get("https://crudcrud.com/api/481988c5864d45e593ee0d710f9d0c59/userData")
+        .then((res)=>{
+            console.log(res.data)
+            res.data.map((entry)=>{
+                let p = document.createElement('p')
+                p.id = entry._id
+                p.innerHTML=`Name: ${entry.Name} Email: ${entry.Email} Number: ${entry.Number} <button id="del">Delete</button><button id="edit">Edit</button>`
+                list.appendChild(p)
+                let clr = p.querySelector('#del')
+                let delurl = "https://crudcrud.com/api/481988c5864d45e593ee0d710f9d0c59/userData/"+entry._id
+                clr.addEventListener('click',()=>{
+                    console.log("Clicked")
+                    p.remove()
+                    axios.delete(delurl)
+                    .then(res=>console.log(res))
+                    .catch(res=>console.log(res))
+                })
+                let edit = p.querySelector('#edit')
+                edit.addEventListener('click',()=>{
+                    document.getElementById('name').value = entry.Name
+                    document.getElementById('email').value = entry.Email
+                    document.getElementById('number').value = entry.Number
+                    p.remove()
+                    axios.delete(delurl)
+                    .then(res=>console.log(res))
+                    .catch(res=>console.log(res))
+                })
+            })
+        })
+        .catch((res)=>{
+            console.log(res)
+        })
+        function handleSubmit(event) {
+            let obj={}
+            event.preventDefault();
+            var name = document.getElementById('name').value
+            console.log("Name : ",name)
+            var email = document.getElementById('email').value
+            console.log("Email : ",email)
+            var number = document.getElementById('number').value
+            console.log("Number : ",number)
+            obj.Name=name
+            obj.Email=email
+            obj.Number=number
+            let newid
+            axios.post("https://crudcrud.com/api/481988c5864d45e593ee0d710f9d0c59/userData",obj)
+            .then(res=>{
+                console.log(res.data._id)
+                newid = res.data._id
+                let p = document.createElement('p')
+                p.id = newid
+                p.innerHTML=`Name: ${obj.Name} Email: ${obj.Email} Number: ${obj.Number} <button id="del">Delete</button><button id="edit">Edit</button>`
+                list.appendChild(p)
+                let clr = p.querySelector('#del')
+                let delurl = "https://crudcrud.com/api/481988c5864d45e593ee0d710f9d0c59/userData/"+newid
+                console.log(newid,delurl)
+                clr.addEventListener('click',()=>{
+                    console.log("Clicked")
+                    p.remove()
+                    axios.delete(delurl)
+                    .then(res=>console.log(res))
+                    .catch(res=>console.log(res))
+                })
+                let edit = p.querySelector('#edit')
+                edit.addEventListener('click',()=>{
+                    document.getElementById('name').value = entry.Name
+                    document.getElementById('email').value = entry.Email
+                    document.getElementById('number').value = entry.Number
+                    p.remove()
+                    axios.delete(delurl)
+                    .then(res=>console.log(res))
+                    .catch(res=>console.log(res))
+                })
+            })
+            
+            document.getElementById('name').value = ''
+            document.getElementById('email').value = ''
+            document.getElementById('number').value = ''    
+        }
+    </script>
+</body>
+</html>
